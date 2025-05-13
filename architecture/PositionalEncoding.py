@@ -50,8 +50,8 @@ class PositionalEncoding(nn.Module):
               - First dimension [:]: Select the single batch dimension
               - Second dimension [:x.shape[1]]: Select positions from 0 to current sequence length
               - Third dimension [:]: Select all embedding features
-            - Uses .requires_grad_(False) to prevent gradient flow through positional encodings
+            - Uses .detach() to prevent gradient flow through positional encodings
             - Applies dropout for regularization
         """
-        x = x + self.pe[:, :x.shape[1], :].requires_grad_(False)
+        x = x + self.pe[:, :x.shape[1], :].detach()
         return self.dropout(x)
